@@ -1,28 +1,21 @@
+const FeedbackModel = require('../models/Feedback');
+
 let functions = {
     Home: async function (req, res) {
         res.send('home')
-        res.end()
     },
-    Contact: async function (req, res) {
-        res.send('contact')
-        res.end()
-    },
-    Feedback: async function (req, res) {
-        res.send('feedback')
-        res.end()
-    },
-    Help: async function (req, res) {
-        res.send('help')
-        res.end()
-    },
-    Faq: async function (req, res) {
-        res.send('faq')
-        res.end()
-    },
-    Privacy_policy: async function (req, res) {
-        res.send('privacy_policy')
-        res.end()
-    },
-   
+    //FOR FEEDBACK (POST)
+    PostFeedback: async function (req, res) {
+        try {
+            const { name, email, message } = req.body;
+            const newFeedback = new FeedbackModel({ name, email, message });
+            await newFeedback.save();
+            res.status(200).json({ message: "Feedback submitted successfully!" });
+        } catch (err) {
+            console.error(err); // <- Already good
+            res.status(500).json({ message: "Error submitting feedback", error: err.message }); // Add this
+        }
+    }
+
 }
 module.exports = functions
