@@ -1,0 +1,1 @@
+npm i nodemon dotenv child_process nodemailer bcryptjs mongoose;
