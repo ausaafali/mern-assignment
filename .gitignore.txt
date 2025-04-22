@@ -1,0 +1,2 @@
+/Backend/node_modules
+/user_panel/node_modules
