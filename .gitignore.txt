@@ -1,2 +1,2 @@
-/Backend/node_modules
-/user_panel/node_modules
+/user_model/node_modules/
+/backend/node_modules/
