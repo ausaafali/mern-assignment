@@ -27,6 +27,26 @@ export default function Register() {
     async function register_user(e) {
         e.preventDefault()
         try {
+
+            let password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            let username_regex = /^[A-Za-z ]+$/;
+
+            if (!name || !email || !pswd || !gender || age == 0) {
+                toast.error("All Fields Are Required");
+                return;
+            }
+
+            if (!password_regex.test(pswd)) {
+                toast.error("Password must contain 1 lower case, uppercase, digit, special character and having length of 8 character minimum");
+                return;
+            }
+
+            if (!username_regex.test(name)) {
+                toast.error("Username should only contains alphabets and a space");
+                return;
+            }
+
+
             let userapi = await axios.post("http://localhost:3007/stuff/user", {
                 name: name,
                 email: email,
@@ -35,8 +55,13 @@ export default function Register() {
                 age: age
             })
             toast.success(userapi.data.msg)
+
         } catch (error) {
-            console.log(error)
+            if (error.status === 409) {
+                toast.error("Email already Exists");
+            } else {
+                console.log(error);
+            }
         }
     }
 
