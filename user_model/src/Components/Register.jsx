@@ -1,6 +1,10 @@
-import React from 'react'
+
 import '../Styling/register.css'
 import '../JS/register.js'
+import React, { useState } from 'react'
+import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 
 export default function Register() {
@@ -23,7 +27,7 @@ export default function Register() {
     async function register_user(e) {
         e.preventDefault()
         try {
-            let userapi = await axios.post("http://localhost:3001/gym/user", {
+            let userapi = await axios.post("http://localhost:3007/stuff/user", {
                 name: name,
                 email: email,
                 password: pswd,
@@ -33,7 +37,6 @@ export default function Register() {
             toast.success(userapi.data.msg)
         } catch (error) {
             console.log(error)
-            // toast.error(userapi.data.msg)
         }
     }
 
@@ -50,35 +53,33 @@ export default function Register() {
                     <div class="user_details">
                         <div class="input_box">
                             <label for="name">Full Name</label>
-                            <input type="text"value={name} onChange={(e)=>{setName(e.target.value)}}
-                            id="name" placeholder="Enter your name" required />
-                        </div>
-                        <div class="input_box">
-                            <label for="username">Username</label>
-                            <input type="text" id="username" placeholder="Enter your username" required />
+                            <input type="text" value={name} onChange={(e) => { setName(e.target.value) }}
+                                id="name" placeholder="Enter your name" required />
                         </div>
                         <div class="input_box">
                             <label for="email">Email</label>
-                            <input type="email" id="email" placeholder="Enter your email" required />
+                            <input value={email} onChange={(e) => { setEmail(e.target.value) }}
+                                type="email" id="email" placeholder="Enter your email" required />
                         </div>
                         <div class="input_box">
-                            <label for="phone">Phone Number</label>
-                            <input type="number" id="phone" placeholder="Enter your number" required />
+                            <label for="phone">Age</label>
+                            <input value={age} onChange={(e) => { setAge(e.target.value) }}
+                                type="number" id="phone" placeholder="Enter your number" required />
                         </div>
                         <div class="input_box">
                             <label for="pass">Password</label>
-                            <input type="password" id="pass" placeholder="Enter your password" required />
-                        </div>
-                        <div class="input_box">
-                            <label for="confirmPass">Confirm Password</label>
-                            <input type="password" id="confirmPass" placeholder="Confirm your password" required />
+                            <input value={pswd} onChange={(e) => { setPswd(e.target.value) }}
+                                type="password" id="pass" placeholder="Enter your password" required />
                         </div>
                     </div>
                     <div class="gender">
                         <span class="gender_title mb-3">Gender</span>
-                        <input type="radio" name="gender" id="radio_1" />
-                        <input type="radio" name="gender" id="radio_2" />
-                        <input type="radio" name="gender" id="radio_3" />
+                        <input type="radio" name="gender" value="male" id="radio_1" required
+                            onChange={(e) => setGender(e.target.value)} checked={gender === "male"} />
+                        <input type="radio" name="gender" value="female" id="radio_2" required
+                            onChange={(e) => setGender(e.target.value)} checked={gender === "female"} />
+                        <input type="radio" name="gender" value="custom" id="radio_3" required
+                            onChange={(e) => setGender(e.target.value)} checked={gender === "custom"} />
 
                         <div class="category d-flex flex-column justify-content-center">
                             <label for="radio_1" className=''>
@@ -91,16 +92,19 @@ export default function Register() {
                             </label>
                             <label for="radio_3" className=''>
                                 <span class="dot three"></span>
-                                <span>Prefer not to say</span>
+                                <span>Custom</span>
                             </label>
                         </div>
                         <div class="reg_btn">
-                            <input type="submit" value="Register" />
+                            <button className='btn btn-primary py-1 px-3' type="submit" onClick={register_user} value="Register">
+                                Submit
+                            </button>
                         </div>
                     </div>
                 </div>
 
             </div>
+            <ToastContainer />
         </div>
     )
 }

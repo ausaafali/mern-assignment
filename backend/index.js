@@ -9,7 +9,7 @@ let myapp = express();
 
 myapp.use(cors());
 myapp.use(express.json());
-myapp.use('/gymfit/',route)
+myapp.use('/stuff/',route)
 
 
 db_var().then(()=>{

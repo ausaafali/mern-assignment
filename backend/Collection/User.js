@@ -17,10 +17,6 @@ let user_collection = mongoose.Schema({
         type: String,
         required: true
     },
-    contact: {
-        type: Number,
-        required: true
-    },
     age: {
         type: Number,
         required: true
